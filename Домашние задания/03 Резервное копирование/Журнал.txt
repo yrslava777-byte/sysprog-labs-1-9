@@ -1,0 +1,23 @@
+$ python3 scenario.py reset
+T0: work/ подготовлен; сделайте резервную копию
+$ python3 backup.py create work T0.zip
+T0.zip: 36 файлов, SHA-256 проверены
+$ python3 scenario.py stage1
+T1: изменения внесены
+$ python3 backup.py create work T1.zip
+T1.zip: 36 файлов, SHA-256 проверены
+$ python3 scenario.py stage2
+T2: изменения внесены
+$ python3 backup.py create work T2.zip
+T2.zip: 35 файлов, SHA-256 проверены
+$ python3 backup.py restore T0.zip restored-T0
+T0.zip → restored-T0: 36 файлов восстановлено
+$ python3 backup.py restore T1.zip restored-T1
+T1.zip → restored-T1: 36 файлов восстановлено
+$ diff -qr initial_documents restored-T0
+Кадры/документ_002.txt восстановлен из T0
+Договоры/документ_003.txt восстановлен из T1
+Финансы/новая_смета.txt восстановлен из T1
+$ python3 backup.py restore damaged.zip rejected
+Ошибка: File is not a zip file
+Повреждённый архив отклонён. Папка восстановления не создана.
