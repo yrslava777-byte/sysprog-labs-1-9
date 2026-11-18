@@ -1,0 +1,4 @@
+sizeof: 272, offsets: 0 8 12 16
+NULL: 22 (Invalid argument)
+{"event": "agent_started", "pid": 73335, "cpus": 6, "page_size": 16384, "host": "[имя компьютера скрыто]"}
+T _core_get_info

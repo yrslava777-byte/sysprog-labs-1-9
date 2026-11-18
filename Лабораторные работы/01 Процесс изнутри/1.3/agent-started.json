@@ -1,0 +1,105 @@
+{
+  "name": "1.3 Agent started",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agent",
+        "options": {}
+      }
+    },
+    {
+      "id": "2",
+      "name": "Basic LLM Chain",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "=Объясни кратко по-русски, что означает событие запуска. Данные: {{ JSON.stringify($json.body) }}"
+      }
+    },
+    {
+      "id": "3",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        260,
+        200
+      ],
+      "parameters": {
+        "model": "qwen2.5:3b",
+        "options": {}
+      }
+    },
+    {
+      "id": "4",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        540,
+        0
+      ],
+      "parameters": {
+        "fromEmail": "agent@sysprog.local",
+        "toEmail": "test@example.invalid",
+        "subject": "=Агент: {{ $('Webhook').item.json.body.event }}",
+        "emailFormat": "text",
+        "text": "={{ $json.text }}\n\n{{ JSON.stringify($('Webhook').item.json.body, null, 2) }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

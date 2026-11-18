@@ -1,0 +1,2 @@
+agent_started: HTTP 200
+Получен POST /webhook-test/agent с JSON и всеми ожидаемыми полями.

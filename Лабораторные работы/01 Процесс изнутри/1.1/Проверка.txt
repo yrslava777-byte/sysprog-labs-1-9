@@ -1,0 +1,7 @@
+sizeof: 272, offsets: 0 8 12 16
+pid: 73324
+cpus: 6
+page_size: 16384
+host: [имя компьютера скрыто]
+NULL: 22 (Invalid argument)
+warning: format specifies type 'int' but the argument has type 'int64_t' (aka 'long long') [-Wformat]

@@ -1,0 +1,14 @@
+# 1.2 C и Python вместе
+
+Собрала ядро из 1.1 в динамическую библиотеку. Подключила её через `ctypes`, проверила раскладку структуры и ошибку пустого указателя. Python формирует событие `agent_started` в JSON.
+
+Запуск из папки первой лабораторной на macOS:
+
+```sh
+clang -Wall -Wextra -Werror -dynamiclib 1.1/core_info.c -o 1.2/libcore.dylib
+python3 1.2/brain.py --layout
+python3 1.2/brain.py --check-null
+python3 1.2/brain.py
+```
+
+[Результат проверки](Проверка.txt) · [Глава курса](https://maximbytecamp.github.io/sysprog_makarov/temy/07-c-i-python-vmeste/index.html)
